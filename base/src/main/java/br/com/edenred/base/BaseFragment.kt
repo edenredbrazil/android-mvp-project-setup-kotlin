@@ -3,9 +3,11 @@ package br.com.edenred.base
 import android.app.Fragment
 import android.app.FragmentTransaction
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import java.io.Serializable
 
 /**
  * Created by ticketservices on 5/23/17.
@@ -16,6 +18,12 @@ abstract class BaseFragment : Fragment() {
     abstract fun getName(): String
     abstract fun getLayout(): Int
     abstract fun onStarted()
+
+    companion object {
+        open val PARCELABLE:String = "parcelable"
+        open val SERIALIZABLE:String = "serializable"
+        open val PARCELABLE_LIST:String = "parcelable_list"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,4 +67,20 @@ abstract class BaseFragment : Fragment() {
     fun <Activity:BaseActivity> getBaseActivity():Activity{
         return activity as Activity
     }
+
+    fun setData(data:Any){
+        val bundle:Bundle = Bundle()
+        when(data){
+            is Serializable -> bundle.putSerializable(SERIALIZABLE,data)
+            is Parcelable -> bundle.putParcelable(PARCELABLE,data)
+            is ArrayList<*> -> bundle.putParcelableArrayList(PARCELABLE_LIST, data as ArrayList<Parcelable>)
+        }
+        arguments = bundle
+    }
+
+    protected fun <S:Serializable> getSerializable() = arguments.getSerializable(BaseActivity.SERIALIZABLE) as S
+
+    protected fun <P:Parcelable> getParcelable() = arguments.getParcelable<P>(BaseActivity.PARCELABLE)
+
+    protected fun <P:Parcelable> getParcelableList() = arguments.getParcelableArrayList<P>(BaseActivity.PARCELABLE_LIST)
 }

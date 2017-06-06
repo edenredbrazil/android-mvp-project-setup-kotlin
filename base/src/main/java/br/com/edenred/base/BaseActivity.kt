@@ -1,8 +1,7 @@
 package br.com.edenred.base
 
-import android.app.Activity
-import android.app.FragmentManager
-import android.app.FragmentTransaction
+import android.app.*
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
@@ -16,6 +15,8 @@ abstract class BaseActivity : AppCompatActivity(){
         val PARCELABLE:String = "parcelable"
         val SERIALIZABLE:String = "serializable"
         val PARCELABLE_LIST:String = "parcelable_list"
+
+        open fun <T: Fragment> createFragment(entityClass:Class<T>):T = entityClass.newInstance()
     }
 
     abstract fun getLayout(): Int
@@ -112,5 +113,37 @@ abstract class BaseActivity : AppCompatActivity(){
             is Bundle -> intent.putExtras(data)
         }
         return intent
+    }
+
+    fun showAlert(icon:Int, title:String, message:String,
+                  positive: (dialog:DialogInterface, which: Int) -> Unit? = null!!,
+                  negative: (dialog:DialogInterface, which:Int) -> Unit? = null!!) {
+
+        val dialog:AlertDialog.Builder = AlertDialog.Builder(this)
+                .setIcon(icon)
+                .setTitle(title)
+                .setMessage(message)
+
+        if(positive != null) dialog.setPositiveButton(R.string.ok) { dialog, which ->  positive.invoke(dialog,which) }
+        else dialog.setPositiveButton(R.string.ok) { dialog, which -> dialog.dismiss() }
+
+        if(negative != null) dialog.setNegativeButton(R.string.cancel) { dialog, which -> negative.invoke(dialog,which) }
+    }
+
+    /**
+     * Show Toast
+     * @param message
+     */
+    protected fun showToast(message:String) {
+        /*runOnUiThread(Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(BaseActivity.this, message, Toast.LENGTH_SHORT).show()
+            }
+        })*/
+    }
+
+    protected fun overrideBaseTransition(transition:Array<Int>){
+        overridePendingTransition(transition[0],transition[1])
     }
 }
