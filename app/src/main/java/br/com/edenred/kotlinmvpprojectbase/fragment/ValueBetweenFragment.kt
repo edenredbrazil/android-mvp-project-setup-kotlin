@@ -8,7 +8,7 @@ import br.com.edenred.kotlinmvpprojectbase.activity.WorkingWithFragmentActivity
 import kotlinx.android.synthetic.main.value_between_fragment.*
 
 /**
- * Created by ticketservices on 5/30/17.
+ * Created by rodrigosimoesrosa on 5/30/17.
  */
 class ValueBetweenFragment: BaseFragment() {
 

@@ -6,7 +6,7 @@ import br.com.edenred.kotlinmvpprojectbase.fragment.ValueBetweenFragment
 import kotlinx.android.synthetic.main.working_with_fragment_activity.*
 
 /**
- * Created by ticketservices on 5/29/17.
+ * Created by rodrigosimoesrosa on 5/29/17.
  */
 class WorkingWithFragmentActivity : BaseActivity() {
 

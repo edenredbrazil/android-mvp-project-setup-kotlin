@@ -6,9 +6,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Parcelable
 import android.support.v7.app.AppCompatActivity
+import android.widget.Toast
 import java.io.Serializable
 
 
+/**
+ * Created by rodrigosimoesrosa
+ */
 abstract class BaseActivity : AppCompatActivity(){
 
     companion object {
@@ -28,8 +32,9 @@ abstract class BaseActivity : AppCompatActivity(){
         buildComponents()
     }
 
-    protected fun <Fragment:BaseFragment> addFragment(fragment:Fragment, container:Int,backStack:Boolean = false, animations:Array<Int>? = null){
+    fun <Fragment:BaseFragment> addFragment(fragment:Fragment, container:Int,backStack:Boolean = false, animations:Array<Int>? = null){
         val ft:FragmentTransaction = fragmentManager.beginTransaction()
+
         if(fragmentManager.backStackEntryCount == 0){
             if(animations != null && animations.size == 4){
                 ft.setCustomAnimations(animations[0],animations[1],animations[2],animations[3])
@@ -42,7 +47,7 @@ abstract class BaseActivity : AppCompatActivity(){
         }
     }
 
-    protected fun <Fragment:BaseFragment> replaceFragment(fragment: Fragment, container: Int, backStack: Boolean = false, animations: Array<Int>? = null){
+    fun <Fragment:BaseFragment> replaceFragment(fragment: Fragment, container: Int, backStack: Boolean = false, animations: Array<Int>? = null){
         val ft:FragmentTransaction = fragmentManager.beginTransaction()
         if(animations != null && animations.size == 4){
             ft.setCustomAnimations(animations[0],animations[1],animations[2],animations[3])
@@ -52,7 +57,7 @@ abstract class BaseActivity : AppCompatActivity(){
         ft.commit()
     }
 
-    protected fun <Fragment:BaseFragment> removeFragment(fragment: Fragment,animations: Array<Int>? = null){
+    fun <Fragment:BaseFragment> removeFragment(fragment: Fragment, animations: Array<Int>? = null){
         val ft:FragmentTransaction = fragmentManager.beginTransaction()
         if(animations != null && animations.size == 4){
             ft.setCustomAnimations(animations[0],animations[1],animations[2],animations[3])
@@ -60,14 +65,14 @@ abstract class BaseActivity : AppCompatActivity(){
         ft.remove(fragment)
     }
 
-    fun <A:Activity> clearBackStack(activity:A? = null){
+    fun <Activity:AppCompatActivity> clearBackStack(activity:Activity? = null){
         val fm:FragmentManager
         if(activity != null) fm = activity.fragmentManager
         else fm = fragmentManager
         for(i in 0 .. fm.backStackEntryCount) fm.popBackStack()
     }
 
-    protected fun <A: AppCompatActivity> startActivity(classActivity: Class<A>, data:Any?){
+    fun <Activity: AppCompatActivity> startActivity(classActivity: Class<Activity>, data:Any?){
         var intent:Intent?
         if(data == null){
             intent = Intent(applicationContext,classActivity)
@@ -80,7 +85,7 @@ abstract class BaseActivity : AppCompatActivity(){
         startActivity(intent)
     }
 
-    protected fun <A: AppCompatActivity> startActivityForResult(classActivity:Class<A>, requestCode:Int, data:Any? = null) {
+    fun <Actvity: AppCompatActivity> startActivityForResult(classActivity:Class<Actvity>, requestCode:Int, data:Any? = null) {
         var intent:Intent?
         if(data == null){
             intent = Intent(applicationContext, classActivity)
@@ -93,19 +98,19 @@ abstract class BaseActivity : AppCompatActivity(){
         startActivityForResult(intent, requestCode)
     }
 
-    protected fun <S:Serializable> getSerializable() = intent.getSerializableExtra(SERIALIZABLE) as S
+    fun <S:Serializable> getSerializable() = intent.getSerializableExtra(SERIALIZABLE) as S
 
-    protected fun <P:Parcelable> getParcelable() = intent.getParcelableExtra<P>(PARCELABLE)
+    fun <P:Parcelable> getParcelable() = intent.getParcelableExtra<P>(PARCELABLE)
 
-    protected fun <P:Parcelable> getParcelableList() = intent.getParcelableArrayListExtra<P>(PARCELABLE_LIST)
+    fun <P:Parcelable> getParcelableList() = intent.getParcelableArrayListExtra<P>(PARCELABLE_LIST)
     
-    protected fun <A: AppCompatActivity, P: Parcelable> getIntentWithParcelableList(classActivity:Class<A>, parcelables: ArrayList<P>):Intent{
+    fun <Activity: AppCompatActivity, P: Parcelable> getIntentWithParcelableList(classActivity:Class<Activity>, parcelables: ArrayList<P>):Intent{
         val intent:Intent = Intent(applicationContext,classActivity)
         intent.putParcelableArrayListExtra(PARCELABLE_LIST, parcelables)
         return intent
     }
 
-    protected fun <A: AppCompatActivity> getIntentWithData(classActivity:Class<A>, data:Any): Intent {
+    fun <Activity: AppCompatActivity> getIntentWithData(classActivity:Class<Activity>, data:Any): Intent {
         val intent:Intent = Intent(applicationContext,classActivity)
         when(data){
             is Parcelable -> intent.putExtra(PARCELABLE, data)
@@ -130,20 +135,7 @@ abstract class BaseActivity : AppCompatActivity(){
         if(negative != null) dialog.setNegativeButton(R.string.cancel) { dialog, which -> negative.invoke(dialog,which) }
     }
 
-    /**
-     * Show Toast
-     * @param message
-     */
-    protected fun showToast(message:String) {
-        /*runOnUiThread(Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(BaseActivity.this, message, Toast.LENGTH_SHORT).show()
-            }
-        })*/
-    }
-
-    protected fun overrideBaseTransition(transition:Array<Int>){
-        overridePendingTransition(transition[0],transition[1])
+    fun showToast(message:String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG)
     }
 }

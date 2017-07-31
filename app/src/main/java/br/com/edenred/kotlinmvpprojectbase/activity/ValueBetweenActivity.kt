@@ -6,7 +6,7 @@ import br.com.edenred.kotlinmvpprojectbase.model.A
 import kotlinx.android.synthetic.main.value_between_activity.*
 
 /**
- * Created by ticketservices on 5/29/17.
+ * Created by rodrigosimoesrosa on 5/29/17.
  */
 class ValueBetweenActivity : BaseActivity() {
 

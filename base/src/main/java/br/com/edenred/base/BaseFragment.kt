@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import java.io.Serializable
 
 /**
- * Created by ticketservices on 5/23/17.
+ * Created by rodrigosimoesrosa on 5/23/17.
  */
 abstract class BaseFragment : Fragment() {
 

@@ -4,7 +4,7 @@ import br.com.edenred.kotlinmvpprojectbase.model.A
 import kotlinx.android.synthetic.main.teste_activity2.*
 
 /**
- * Created by ticketservices on 5/29/17.
+ * Created by rodrigosimoesrosa on 5/29/17.
  */
 
 class ValueBetweenActivity2 : br.com.edenred.base.BaseActivity() {
