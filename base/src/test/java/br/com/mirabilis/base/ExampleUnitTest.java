@@ -1,4 +1,4 @@
-package br.com.edenred.base;
+package br.com.mirabilis.base;
 
 import org.junit.Test;
 
