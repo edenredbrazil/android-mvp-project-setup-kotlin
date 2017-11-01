@@ -1,10 +1,3 @@
 <resources>
-    <string name="app_name">KotlinMVPProjectBase</string>
-    <string name="fragment">Fragment</string>
-    <string name="value_between_activity">Value Between Activitys</string>
-    <string name="name">Name</string>
-    <string name="age">Age</string>
-    <string name="open_new_activity_with_value">Open new Activity with value</string>
-    <string name="open_new_fragment_with_value">Open new Fragment with value</string>
-    <string name="field_empty">Empty field</string>
+    <string name="app_name">Android-MVP-Kotlin</string>
 </resources>
